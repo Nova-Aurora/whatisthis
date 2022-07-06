@@ -43,9 +43,9 @@ export async function startCanvas(canvasElement, imagesrc) {
     resize();
     window.onresize = resize;
     window.onmousedown = () => { canvas.dragging = true };
-    window.ontouchstart = () => {canvas.dragging = true};
+    canvas.ctx.canvas.ontouchstart = () => { canvas.dragging = true };
     window.onmouseup = () => { canvas.dragging = false };
-    window.ontouchend = () => {canvas.dragging = false};
+    canvas.ctx.canvas.ontouchend = () => { canvas.dragging = false };
     window.onmousemove = event => {
         console.log(event);
         if (!canvas.dragging) { return }
@@ -53,7 +53,7 @@ export async function startCanvas(canvasElement, imagesrc) {
         canvas.oy = ((((canvas.oy + event.movementY) / canvas.ctx.canvas.height) % 1) * canvas.ctx.canvas.height);
         newpaint(canvas);
     }
-    window.ontouchmove = event => {
+    canvas.ctx.canvas.ontouchmove = event => {
         console.log(event);
         if (!canvas.dragging) { return }
         if (event.touches.length !== 1) {return}

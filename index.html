@@ -3,7 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>whatisthis</title>
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+    <script type="module" src="./whatisthis.js"></script>
   </head>
-  <body style="height: 1000000vh; width: 10000000vw; background-image: url('./whatisthis.png');">
+  <body>
+    <noscript>
+      <div style="width: 100%; height: 100%; background-image: url(./whatisthis.png);"></div>
+    </noscript>
+    <canvas id="whatisthis" hidden></canvas>
   </body>
 </html>

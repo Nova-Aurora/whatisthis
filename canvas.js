@@ -59,9 +59,10 @@ export async function startCanvas(canvasElement, imagesrc) {
         if (event.touches.length !== 1) {return}
             const movementX = event.changedTouches[0].clientX - canvas.lastX; //Find how much the touch has moved.
             const movementY = event.changedTouches[0].clientY - canvas.lastY;
-            console.log(`X: ${movementX} Y: ${movementY}`);
-            canvas.ox += movementX;
-            canvas.oy += movementY;
+            canvas.lastX = event.changedTouches[0].clientX;
+            canvas.lastY = event.changedTouches[0].clientY;
+            canvas.ox = (((canvas.ox + movementX) / canvas.ctx.canvas.width) % 1) * canvas.ctx.canvas.width;
+            canvas.oy = ((((canvas.oy + movementY) / canvas.ctx.canvas.height) % 1) * canvas.ctx.canvas.height);
             newpaint(canvas);
     })
 }

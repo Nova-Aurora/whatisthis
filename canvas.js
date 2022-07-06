@@ -47,22 +47,20 @@ export async function startCanvas(canvasElement, imagesrc) {
     window.onmouseup = () => { canvas.dragging = false };
     window.addEventListener('touchend', () => { canvas.dragging = false });
     window.onmousemove = event => {
-        console.log(event);
         if (!canvas.dragging) { return }
-        canvas.ox = (((canvas.ox + event.movementX) / canvas.ctx.canvas.width) % 1) * canvas.ctx.canvas.width; // My attempt at normalizing the offset to reasonable values.
-        canvas.oy = ((((canvas.oy + event.movementY) / canvas.ctx.canvas.height) % 1) * canvas.ctx.canvas.height);
+        canvas.ox = (((canvas.ox + event.movementX) / canvas.img.width) % 1) * canvas.img.width; // My attempt at normalizing the offset to reasonable values.
+        canvas.oy = ((((canvas.oy + event.movementY) / canvas.img.height) % 1) * canvas.img.height);
         newpaint(canvas);
     }
     window.addEventListener('touchmove', event => {
-        console.log(event);
         if (!canvas.dragging) { return }
-        if (event.touches.length !== 1) {return}
-            const movementX = event.changedTouches[0].clientX - canvas.lastX; //Find how much the touch has moved.
-            const movementY = event.changedTouches[0].clientY - canvas.lastY;
-            canvas.lastX = event.changedTouches[0].clientX;
-            canvas.lastY = event.changedTouches[0].clientY;
-            canvas.ox = (((canvas.ox + movementX) / canvas.ctx.canvas.width) % 1) * canvas.ctx.canvas.width;
-            canvas.oy = ((((canvas.oy + movementY) / canvas.ctx.canvas.height) % 1) * canvas.ctx.canvas.height);
-            newpaint(canvas);
+        if (event.touches.length !== 1) { return }
+        const movementX = event.changedTouches[0].clientX - canvas.lastX; //Find how much the touch has moved.
+        const movementY = event.changedTouches[0].clientY - canvas.lastY;
+        canvas.lastX = event.changedTouches[0].clientX;
+        canvas.lastY = event.changedTouches[0].clientY;
+        canvas.ox = (((canvas.ox + movementX) / canvas.img.width) % 1) * canvas.img.width;
+        canvas.oy = ((((canvas.oy + movementY) / canvas.img.height) % 1) * canvas.img.height);
+        newpaint(canvas);
     })
 }

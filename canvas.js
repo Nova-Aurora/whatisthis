@@ -42,22 +42,25 @@ export async function startCanvas(canvasElement, imagesrc) {
     }
     resize();
     window.onresize = resize;
-    window.onmousedown = window.ontouchstart = () => {canvas.dragging = true};
+    window.onmousedown = window.ontouchstart = () => { canvas.dragging = true };
     //window.ontouchstart = () => {canvas.dragging = true};
-    window.onmouseup = window.ontouchend = () => {canvas.dragging = false};
+    window.onmouseup = window.ontouchend = () => { canvas.dragging = false };
     //window.ontouchend = () => {canvas.dragging = false};
     window.onmousemove = event => {
-        if (!canvas.dragging) {return}
+        if (!canvas.dragging) { return }
         canvas.ox = (((canvas.ox + event.movementX) / canvas.ctx.canvas.width) % 1) * canvas.ctx.canvas.width;
         canvas.oy = ((((canvas.oy + event.movementY) / canvas.ctx.canvas.height) % 1) * canvas.ctx.canvas.height);
         newpaint(canvas);
     }
     window.ontouchmove = event => {
-        if (!canvas.dragging) {return}
-        const movementX = event.changedTouches[0].clientX - canvas.lastX;
-        const movementY = event.changedTouches[0].clientY - canvas.lastY;
-        canvas.ox = (((canvas.ox + movementX) / canvas.ctx.canvas.width) % 1) * canvas.ctx.canvas.width;
-        canvas.oy = ((((canvas.oy + movementY) / canvas.ctx.canvas.height) % 1) * canvas.ctx.canvas.height);
-        newpaint(canvas);
+        if (!canvas.dragging) { return }
+        if (event.touches.length === 1) {
+            const movementX = event.changedTouches[0].clientX - canvas.lastX;
+            const movementY = event.changedTouches[0].clientY - canvas.lastY;
+            console.log(`X: ${movementX} Y: ${movementY}`);
+            canvas.ox = (((canvas.ox + movementX) / canvas.ctx.canvas.width) % 1) * canvas.ctx.canvas.width;
+            canvas.oy = ((((canvas.oy + movementY) / canvas.ctx.canvas.height) % 1) * canvas.ctx.canvas.height);
+            newpaint(canvas);
+        }
     }
 }

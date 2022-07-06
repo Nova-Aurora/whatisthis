@@ -47,6 +47,7 @@ export async function startCanvas(canvasElement, imagesrc) {
     window.onmouseup = () => { canvas.dragging = false };
     window.ontouchend = () => {canvas.dragging = false};
     window.onmousemove = event => {
+        console.log(event);
         if (!canvas.dragging) { return }
         canvas.ox = (((canvas.ox + event.movementX) / canvas.ctx.canvas.width) % 1) * canvas.ctx.canvas.width;
         canvas.oy = ((((canvas.oy + event.movementY) / canvas.ctx.canvas.height) % 1) * canvas.ctx.canvas.height);

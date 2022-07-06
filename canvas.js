@@ -40,8 +40,16 @@ export async function startCanvas(canvasElement, imagesrc) {
     resize();
     window.onresize = resize;
     window.onmousedown = () => {canvas.dragging = true};
+    window.ontouchstart = () => {canvas.dragging = true};
     window.onmouseup = () => {canvas.dragging = false};
+    window.ontouchend = () => {canvas.dragging = false};
     window.onmousemove = event => {
+        if (!canvas.dragging) {return}
+        canvas.ox = (((canvas.ox + event.movementX) / canvas.ctx.canvas.width) % 1) * canvas.ctx.canvas.width;
+        canvas.oy = ((((canvas.oy + event.movementY) / canvas.ctx.canvas.height) % 1) * canvas.ctx.canvas.height);
+        newpaint(canvas);
+    }
+    window.ontouchmove = event => {
         if (!canvas.dragging) {return}
         canvas.ox = (((canvas.ox + event.movementX) / canvas.ctx.canvas.width) % 1) * canvas.ctx.canvas.width;
         canvas.oy = ((((canvas.oy + event.movementY) / canvas.ctx.canvas.height) % 1) * canvas.ctx.canvas.height);

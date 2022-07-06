@@ -53,14 +53,14 @@ export async function startCanvas(canvasElement, imagesrc) {
         newpaint(canvas);
     }
     window.ontouchmove = event => {
+        console.log(event);
         if (!canvas.dragging) { return }
-        if (event.touches.length === 1) {
-            const movementX = event.changedTouches[0].clientX - canvas.lastX;
+        if (event.touches.length !== 1) {return}
+            const movementX = event.changedTouches[0].clientX - canvas.lastX; //Find how much the touch has moved.
             const movementY = event.changedTouches[0].clientY - canvas.lastY;
             console.log(`X: ${movementX} Y: ${movementY}`);
-            canvas.ox = (((canvas.ox + movementX) / canvas.ctx.canvas.width) % 1) * canvas.ctx.canvas.width;
+            canvas.ox = (((canvas.ox + movementX) / canvas.ctx.canvas.width) % 1) * canvas.ctx.canvas.width; // My attempt at normalizing the offset to reasonable values.
             canvas.oy = ((((canvas.oy + movementY) / canvas.ctx.canvas.height) % 1) * canvas.ctx.canvas.height);
             newpaint(canvas);
-        }
     }
 }
